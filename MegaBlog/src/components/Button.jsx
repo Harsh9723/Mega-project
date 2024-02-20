@@ -10,10 +10,10 @@ export default function Button({
  
 }) {
     return (
-        <button className={`px-4 py-2 rounded-lg ${textColor}${bgColor} ${className}`}
+        <Button className={`px-4 py-2 rounded-lg ${textColor}${bgColor} ${className}`}
         {...props}>
             {Children}
-        </button>
+        </Button>
   );
 }
 
