@@ -3,19 +3,19 @@ import { Client, ID, Databases, Storage, Query } from "appwrite";
 
 export class Service{
     client = new Client();
-    Databases;
+    databases;
     bucket;
     constructor(){
         this.client
         .setEndpoint(conf.appwriteUrl)
         .setProject(conf.appwriteProjectId);
-        this.Databases = new Databases(this.client);
+        this.databases = new Databases(this.client);
         this.bucket = new Storage(this.client);
     }
 
     async createPost ({title, slug, content, featuredImage, status, userId}){
         try {
-            return await this.Databases.createDocument(
+            return await this.databases.createDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 slug,
@@ -31,10 +31,10 @@ export class Service{
             console.log("Appwrite serive :: createPost :: error", error);
         }
     }
-    async updatePost (slug,{title,  content, featuredImage, status,})
+    async updatePost (slug,{title,  content, featuredImage, status})
     {
         try {
-            return await this.Databases.updateDocument(
+            return await this.databases.updateDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 slug,
@@ -51,7 +51,7 @@ export class Service{
     }
     async deletePost (slug){
         try {
-            return await this.Databases.deleteDocument(
+            return await this.databases.deleteDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 slug,
@@ -66,7 +66,7 @@ export class Service{
 
     async getPost(slug){
         try {
-            return await this.Databases.getDocument(
+            return await this.databases.getDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 slug
@@ -79,7 +79,7 @@ export class Service{
     }
     async getPosts(queries = [Query.equal("status","active")]){
         try {
-            return await this.Databases.listDocuments(
+            return await this.databases.listDocuments(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 queries,
@@ -110,7 +110,7 @@ export class Service{
 
     async deleteFile(fileId){
         try {
-            return await this.bucket.deleteFile(
+             await this.bucket.deleteFile(
                 conf.appwriteBucketId,
                 fileId
             )
